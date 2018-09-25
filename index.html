@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <script src="vue.js"></script>
 
-  <title>Document</title>
+  <title>Documentdd</title>
 </head>
 
 <body>
@@ -18,13 +18,14 @@
         <label for="exampleInputFirstName">First Name</label>
         <input type="text" class="form-control" id="exampleInputFirstName" aria-describedby="FirstNameHelp" placeholder="Enter First Name"
         v-model="firstName"
-        v-on:="saveFirstName"
         >
         <small id="emailHelp" class="form-text text-muted">We'll never share your First Name anyone else. </small>
       </div>
       <div class="form-group">
         <label for="exampleInputLastName">Last Name</label>
-        <input type="text" class="form-control" id="exampleInputtLastName" aria-describedby="exampleInputLastName" placeholder="Enter First Name" v-model="lastName">
+        <input type="text" class="form-control" id="exampleInputtLastName" aria-describedby="exampleInputLastName" placeholder="Enter First Name"
+        v-model="lastName"
+        >
         <small id="LastNameHelp" class="form-text text-muted">We'll never share your Last Name anyone else.</small>
       </div>
       <div class="form-group">
@@ -33,20 +34,19 @@
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
       </div>
       <div class="form-group">
-        <button class="btn btn-danger">Add guest</button>
-        <div class="form-group hide">
+        <button class="btn btn-danger"
+        v-on:click="showGuest"
+
+        >Add guest</button>
+        <div class="form-group hide" v-show="hasGuest">
           <label for="exampleInputGuest">Guest</label>
-          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter First Name">
+          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name">
           <small id="GuestHelp" class="form-text text-muted">We'll never share your Guest anyone else.</small>
         </div>
       </div>
-
-
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
-
-
   <script>
     let vForm = new Vue({
       el: '.vForm',
@@ -54,11 +54,16 @@
         firstName: '',
         lastName: '',
         userEmail: '',
+        hasGuest: true,
         userGuests: []
       },
       methods: {
-        saveFirstName() {
-          console.log(1);
+        showGuest(e) {
+          e.preventDefault();
+          if(this.hasGuest){
+            return this.hasGuest = !this.hasGuest
+          }
+
         }
 
       }
