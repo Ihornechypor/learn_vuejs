@@ -38,9 +38,12 @@
         v-on:click="showGuest"
 
         >Add guest</button>
-        <div class="form-group hide" v-show="hasGuest">
+        <div class="form-group" v-show="hasGuest">
           <label for="exampleInputGuest">Guest</label>
-          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name">
+          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name"
+          v-model='userGuest'
+          v-on:mouseleave="addGuest"
+          >
           <small id="GuestHelp" class="form-text text-muted">We'll never share your Guest anyone else.</small>
         </div>
       </div>
@@ -54,16 +57,25 @@
         firstName: '',
         lastName: '',
         userEmail: '',
-        hasGuest: true,
+        hasGuest: false,
+        userGuest: '',
         userGuests: []
       },
       methods: {
         showGuest(e) {
+          console.log(event.bubbles);
           e.preventDefault();
-          if(this.hasGuest){
-            return this.hasGuest = !this.hasGuest
+          if(event.bubbles) {
+              return this.hasGuest = !this.hasGuest
           }
-
+          // else if (this.userGuests == []){
+          //   console.log(1);
+          // }
+        },
+        addGuest(){
+          //this.userGuests.push(this.userGuests);
+          this.userGuests = this.userGuests.push(this.userGuest);
+          console.log(this.userGuests);
         }
 
       }
