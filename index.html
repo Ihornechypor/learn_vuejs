@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="vue.js"></script>
+
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+    <form class="vForm">
+      <div class="form-group">
+        <label for="exampleInputFirstName">First Name</label>
+        <input type="text" class="form-control" id="exampleInputFirstName" aria-describedby="FirstNameHelp" placeholder="Enter First Name"
+        v-model="firstName"
+        v-on:="saveFirstName"
+        >
+        <small id="emailHelp" class="form-text text-muted">We'll never share your First Name anyone else. </small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputLastName">Last Name</label>
+        <input type="text" class="form-control" id="exampleInputtLastName" aria-describedby="exampleInputLastName" placeholder="Enter First Name" v-model="lastName">
+        <small id="LastNameHelp" class="form-text text-muted">We'll never share your Last Name anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="userEmail">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-danger">Add guest</button>
+        <div class="form-group hide">
+          <label for="exampleInputGuest">Guest</label>
+          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter First Name">
+          <small id="GuestHelp" class="form-text text-muted">We'll never share your Guest anyone else.</small>
+        </div>
+      </div>
+
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+
+  <script>
+    let vForm = new Vue({
+      el: '.vForm',
+      data: {
+        firstName: '',
+        lastName: '',
+        userEmail: '',
+        userGuests: []
+      },
+      methods: {
+        saveFirstName() {
+          console.log(1);
+        }
+
+      }
+    });
+  </script>
+
+
+  <script src="http://localhost:35729/livereload.js"></script>
+</body>
+
+</html>
