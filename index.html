@@ -37,10 +37,12 @@
         <button class="btn btn-danger"
         v-on:click="addGuest"
         >Add guest</button>
-        <div class="form-group" v-for="(number, i) in userNumbers">
-          <label for="exampleInputGuest">Guest {{i + 1}}</label>
+        <div class="form-group" v-for="(number, index) in userNumbers" :index="index">
+          <label for="exampleInputGuest"
+          v-on:dblclick="dellGuest"
+          >Guest {{index + 1}}</label>
           <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name"
-          v-for="value in userGuests">
+          >
 
         </div>
       </div>
@@ -70,10 +72,15 @@
           //   console.log(1);
           // }
         },
-        addGuest(e){
+        addGuest(e,index){
+          console.log(index);
           e.preventDefault();
-          this.userNumbers.push(this.i);
 
+          this.userNumbers.push('guet');
+          console.log(this.userNumbers);
+        },
+        dellGuest(e){
+          console.log(e.path[0]);
         }
 
       }
