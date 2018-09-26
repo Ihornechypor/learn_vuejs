@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <script src="vue.js"></script>
 
-  <title>Documentdd</title>
+  <title>Documentddd</title>
 </head>
 
 <body>
@@ -37,10 +37,12 @@
         <button class="btn btn-danger"
         v-on:click="addGuest"
         >Add guest</button>
-        <div class="form-group" v-for="(number, index) in userNumbers" :index="index">
+        <div class="form-group" v-for="(number, index) in userNumbers">
           <label for="exampleInputGuest"
           v-on:dblclick="dellGuest"
-          >Guest {{index + 1}}</label>
+          >
+          Guest {{index + 1}}
+        </label>
           <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name"
           >
 
@@ -56,10 +58,9 @@
         firstName: '',
         lastName: '',
         userEmail: '',
-        hasGuest: false,
         userNumbers: [],
-        userGuest: '',
-        userGuests: [1]
+        firstGuest: 1,
+        userGuest: ''
       },
       methods: {
         showGuest(e) {
@@ -72,15 +73,13 @@
           //   console.log(1);
           // }
         },
-        addGuest(e,index){
-          console.log(index);
+        addGuest(e){
           e.preventDefault();
-
-          this.userNumbers.push('guet');
+          this.userNumbers.push(this.userNumbers.length + 1);
           console.log(this.userNumbers);
         },
         dellGuest(e){
-          console.log(e.path[0]);
+            console.log(this.userNumbers.index);
         }
 
       }
