@@ -35,16 +35,13 @@
       </div>
       <div class="form-group">
         <button class="btn btn-danger"
-        v-on:click="showGuest"
-
+        v-on:click="addGuest"
         >Add guest</button>
-        <div class="form-group" v-show="hasGuest">
-          <label for="exampleInputGuest">Guest</label>
+        <div class="form-group" v-for="(number, i) in userNumbers">
+          <label for="exampleInputGuest">Guest {{i + 1}}</label>
           <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name"
-          v-model='userGuest'
-          v-on:mouseleave="addGuest"
-          >
-          <small id="GuestHelp" class="form-text text-muted">We'll never share your Guest anyone else.</small>
+          v-for="value in userGuests">
+
         </div>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
@@ -58,8 +55,9 @@
         lastName: '',
         userEmail: '',
         hasGuest: false,
+        userNumbers: [],
         userGuest: '',
-        userGuests: []
+        userGuests: [1]
       },
       methods: {
         showGuest(e) {
@@ -72,10 +70,10 @@
           //   console.log(1);
           // }
         },
-        addGuest(){
-          //this.userGuests.push(this.userGuests);
-          this.userGuests = this.userGuests.push(this.userGuest);
-          console.log(this.userGuests);
+        addGuest(e){
+          e.preventDefault();
+          this.userNumbers.push(this.i);
+
         }
 
       }
