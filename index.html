@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <script src="vue.js"></script>
 
-  <title>Documentddd</title>
+  <title>Documentdddd</title>
 </head>
 
 <body>
@@ -33,18 +33,18 @@
         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="userEmail">
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
       </div>
+      <button class="btn btn-danger"
+      v-on:click="addGuest"
+      >Add guest</button>
       <div class="form-group">
-        <button class="btn btn-danger"
-        v-on:click="addGuest"
-        >Add guest</button>
-        <div class="form-group" v-for="(number, index) in userNumbers">
+
+        <div class="form-group  guest" v-for="(number, index) in userNumbers">
           <label for="exampleInputGuest"
           v-on:dblclick="dellGuest"
           >
-          Guest {{index + 1}}
+          Guest <span>{{index + 1}}</span>
         </label>
-          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name"
-          >
+          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name">
 
         </div>
       </div>
@@ -59,7 +59,6 @@
         lastName: '',
         userEmail: '',
         userNumbers: [],
-        firstGuest: 1,
         userGuest: ''
       },
       methods: {
@@ -76,12 +75,14 @@
         addGuest(e){
           e.preventDefault();
           this.userNumbers.push(this.userNumbers.length + 1);
-          console.log(this.userNumbers);
         },
         dellGuest(e){
-            console.log(this.userNumbers.index);
+            let guestInd = e.target.querySelector('span').textContent;
+            guestInd--;
+            console.log(guestInd);
+            this.userNumbers.splice(guestInd,1);
+            console.log(this.userNumbers);
         }
-
       }
     });
   </script>
