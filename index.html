@@ -51,6 +51,8 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
+
+
   <script>
     let vForm = new Vue({
       el: '.vForm',
@@ -61,17 +63,10 @@
         userNumbers: [],
         userGuest: ''
       },
+      computed: {
+
+      },
       methods: {
-        showGuest(e) {
-          console.log(event.bubbles);
-          e.preventDefault();
-          if(event.bubbles) {
-              return this.hasGuest = !this.hasGuest
-          }
-          // else if (this.userGuests == []){
-          //   console.log(1);
-          // }
-        },
         addGuest(e){
           e.preventDefault();
           this.userNumbers.push(this.userNumbers.length + 1);
@@ -79,9 +74,7 @@
         dellGuest(e){
             let guestInd = e.target.querySelector('span').textContent;
             guestInd--;
-            console.log(guestInd);
             this.userNumbers.splice(guestInd,1);
-            console.log(this.userNumbers);
         }
       }
     });
