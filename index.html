@@ -12,8 +12,8 @@
 </head>
 
 <body>
-  <div class="container">
-    <form class="vForm">
+  <div class="container vForm">
+    <form class="2" v-else="">
       <div class="form-group">
         <label for="exampleInputFirstName">First Name</label>
         <input type="text" class="form-control" id="exampleInputFirstName" aria-describedby="FirstNameHelp" placeholder="Enter First Name"
@@ -44,15 +44,21 @@
           >
           Guest <span>{{index + 1}}</span>
         </label>
-          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name">
+          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name" v-for="number in userGuests" v-model="userGuests">
 
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary" v-on:click="showForm">Submit</button>
     </form>
+    <div v-show="submitForm">
+      <ul>
+        <li>{{firstName}}</li>
+        <li>{{lastName}}</li>
+        <li>{{userEmail}}</li>
+        <li v-for="number in userGuests"></li>
+      </ul>
+    </div>
   </div>
-
-
   <script>
     let vForm = new Vue({
       el: '.vForm',
@@ -61,9 +67,12 @@
         lastName: '',
         userEmail: '',
         userNumbers: [],
-        userGuest: ''
+        userGuests: [0],
+        submitForm: false
       },
       computed: {
+
+
 
       },
       methods: {
@@ -75,7 +84,13 @@
             let guestInd = e.target.querySelector('span').textContent;
             guestInd--;
             this.userNumbers.splice(guestInd,1);
+        },
+        showForm(e){
+            e.preventDefault();
+            this.submitForm = !false;
+
         }
+
       }
     });
   </script>
