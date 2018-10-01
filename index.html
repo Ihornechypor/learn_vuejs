@@ -44,7 +44,7 @@
           >
           Guest <span>{{index + 1}}</span>
         </label>
-          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name" v-model="userGuest">
+          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name" v-model="userGuest[index]">
 
         </div>
       </div>
@@ -55,7 +55,9 @@
         <li>{{firstName}}</li>
         <li>{{lastName}}</li>
         <li>{{userEmail}}</li>
-        <li>{{userGuest}}</li>
+        <li v-for="(guest, index) in userGuest">
+          {{guest}}
+        </li>
       </ul>
     </div>
   </div>
@@ -69,7 +71,7 @@
         lastName: '',
         userEmail: '',
         userNumbers: [],
-        userGuest: '',
+        userGuest: [],
         userConfim: false
       },
       computed: {
