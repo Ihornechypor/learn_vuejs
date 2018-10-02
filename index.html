@@ -42,7 +42,7 @@
           <label for="exampleInputGuest"
           v-on:dblclick="dellGuest"
           >
-          Guest <span>{{index + 1}}</span>
+          Guest {{index + 1}}
         </label>          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name" v-model="userGuest[index]">
 
         </div>
@@ -50,14 +50,24 @@
       <button type="submit" class="btn btn-primary" v-on:click="showResult">Submit</button>
     </form>
     <div class="result" v-else>
-      <ul>
-        <li>{{firstName}}</li>
-        <li>{{lastName}}</li>
-        <li>{{userEmail}}</li>
+
+<table class="table">
+  <tbody>
+    <tr>
+      <td>{{mergedName}}</td>
+    </tr>
+    <tr>
+      <td>{{userEmail}}</td>
+    </tr>
+    <tr>
+      <td>
         <li v-for="(guest, index) in userGuest">
           {{guest}}
         </li>
-      </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
     </div>
   </div>
   <script>
@@ -66,15 +76,16 @@
       data: {
         firstName: '',
         lastName: '',
+        mergedName: '',
         userEmail: '',
         userNumbers: [],
         userGuest: [],
         userConfim: false
       },
       computed: {
-
-
-
+        mergeFullNAme(){
+        this.mergedName = this.firstName + '' + this.lastName;
+        }
       },
       methods: {
         addGuest(e,index){
