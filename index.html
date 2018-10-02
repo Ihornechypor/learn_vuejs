@@ -13,9 +13,7 @@
 
 <body>
   <div class="container vForm">
-=======
-    <form v-if="userConfim !== true">
->>>>>>> 1971e7a4079130bd59b816af66c4a4c8f3c99ae5
+    <form v-if="!userConfim">
       <div class="form-group">
         <label for="exampleInputFirstName">First Name</label>
         <input type="text" class="form-control" id="exampleInputFirstName" aria-describedby="FirstNameHelp" placeholder="Enter First Name"
@@ -45,17 +43,13 @@
           v-on:dblclick="dellGuest"
           >
           Guest <span>{{index + 1}}</span>
-        </label>
-
-=======
-          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name" v-model="userGuest[index]">
+        </label>          <input type="text" class="form-control" id="exampleInputGuest" aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name" v-model="userGuest[index]">
 
         </div>
       </div>
       <button type="submit" class="btn btn-primary" v-on:click="showResult">Submit</button>
     </form>
     <div class="result" v-else>
->>>>>>> 1971e7a4079130bd59b816af66c4a4c8f3c99ae5
       <ul>
         <li>{{firstName}}</li>
         <li>{{lastName}}</li>
@@ -63,7 +57,6 @@
         <li v-for="(guest, index) in userGuest">
           {{guest}}
         </li>
->>>>>>> 1971e7a4079130bd59b816af66c4a4c8f3c99ae5
       </ul>
     </div>
   </div>
@@ -75,10 +68,8 @@
         lastName: '',
         userEmail: '',
         userNumbers: [],
-=======
         userGuest: [],
         userConfim: false
->>>>>>> 1971e7a4079130bd59b816af66c4a4c8f3c99ae5
       },
       computed: {
 
@@ -86,23 +77,16 @@
 
       },
       methods: {
-        addGuest(e){
+        addGuest(e,index){
           e.preventDefault();
           this.userNumbers.push(this.userNumbers.length + 1);
         },
-        dellGuest(e){
-            let guestInd = e.target.querySelector('span').textContent;
-            guestInd--;
-            this.userNumbers.splice(guestInd,1);
-        },
-=======
+        dellGuest(e, index){
+            this.userNumbers.splice(index,1);
+          },
         showResult(e){
           e.preventDefault();
-          console.log(this.userConfim);
           this.userConfim = !this.userConfim;
-          console.log(this.userConfim);
->>>>>>> 1971e7a4079130bd59b816af66c4a4c8f3c99ae5
-
         }
 
       }
