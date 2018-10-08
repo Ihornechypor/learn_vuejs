@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="vue.js"></script>
+  <title>Document</title>
+  <style>
+  .alert{
+    transition: min-height 0.5s;
+  }
+  </style>
+</head>
+<body>
+  <div class="container vForm">
+    <div class="alert" :style="[prop, minHeight]">
+      some
+    </div>
+          <hr>
+          <table class="table table-bordered" :class="prop">
+            <tr v-for="(value, name) in prop">
+              <td>{{name}}</td>
+              <td>
+                <input type="text" v-model="prop[name]">
+              </td>
+            </tr>
+          </table>
+          <button class="btn btn-primary"
+          @click="height += 10"
+          >height</button>
+  </div>
+  <script>
+    let vForm = new Vue({
+      el: '.vForm',
+      data: {
+        prop: {
+          color: 'red',
+          backgroundColor: 'green'
+        },
+        height: 0
+      },
+      computed: {
+        minHeight(){
+          return {
+            minHeight: this.height + 'px'
+          }
+        }
+
+      }
+    });
+  </script>
+
+
+  <script src="http://localhost:35729/livereload.js"></script>
+</body>
+
+</html>

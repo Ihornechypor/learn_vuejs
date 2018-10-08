@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="vue.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div class="container vForm">
+    <form v-if="!userConfim">
+      <div class="form-group">
+        <label for="exampleInputFirstName">First Name</label>
+        <input type="text" class="form-control" id="exampleInputFirstName" aria-describedby="FirstNameHelp" placeholder="Enter First Name"
+        v-model="firstName"
+        >
+        <small id="emailHelp" class="form-text text-muted">We'll never share your First Name anyone else. </small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputLastName">Last Name</label>
+        <input type="text" class="form-control" id="exampleInputtLastName" aria-describedby="exampleInputLastName" placeholder="Enter First Name"
+        v-model="lastName"
+        >
+        <small id="LastNameHelp" class="form-text text-muted">We'll never share your Last Name anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="userEmail">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <button class="btn btn-danger"
+      v-on:click="addGuest"
+      >Add guest</button>
+      <div class="form-group">
+
+        <div class="form-group  guest" v-for="(guest, key, index) in guests" :key="key">
+          <label for="exampleInputGuest"
+          v-on:dblclick="dellGuest(key)"
+          >
+          Guest {{index + 1}}
+        </label>          <input type="text" class="form-control"  aria-describedby="GuestHelp" placeholder="Enter Guest Name First Name" v-model="guests[key]">
+
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" v-on:click="showResult">Submit</button>
+    </form>
+    <div class="result" v-else>
+<table class="table">
+  <tbody>
+    <tr>
+      <td>{{mergedName}}</td>
+    </tr>
+    <tr>
+      <td>{{userEmail}}</td>
+    </tr>
+    <tr>
+      <td>
+        <li v-for="(guest, index) in guests">
+          {{guest}}
+        </li>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+  </div>
+  <script>
+    let vForm = new Vue({
+      el: '.vForm',
+      data: {
+        firstName: '',
+        lastName: '',
+        mergedName: '',
+        userEmail: '',
+        userNumbers: [],
+        userGuest: [],
+        userConfim: false,
+        guests:{},
+        guestIterator: 0
+      },
+      computed: {
+        mergeFullNAme(){
+        this.mergedName = this.firstName + '' + this.lastName;
+        }
+      },
+      methods: {
+        addGuest(e,index){
+          e.preventDefault();
+          this.guestIterator++;
+          this.$set(this.guests, this.guestIterator, '');
+        },
+        dellGuest(index){
+            this.$delete(this.guests, index);
+          },
+        showResult(e){
+          e.preventDefault();
+          this.userConfim = !this.userConfim;
+        }
+
+      }
+    });
+  </script>
+
+
+  <script src="http://localhost:35729/livereload.js"></script>
+</body>
+
+</html>

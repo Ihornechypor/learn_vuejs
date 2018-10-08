@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="vue.js"></script>
+  <title>Document</title>
+  <style>
+.my-info{
+  font-style: italic;
+}
+  .my-warning{
+    font-size: 20px;
+  }
+
+  </style>
+</head>
+
+<body>
+  <div class="container vForm">
+    <div class="alert" :class="divClassName">
+      {{  divClass }}
+    </div>
+      <div class="form-check-label">
+        <label for="form-check-input">
+        <input type="radio"
+        value="info"
+        v-model="divClass"
+        >
+        Info
+        </label>
+      </div>
+      <div class="form-check-label">
+        <label for="form-check-input">
+        <input type="radio"
+        value="warning"
+        v-model="divClass"
+        >
+        Warning
+        </label>
+      </div>
+      <hr>
+          <div class="form-check-label" v-for="(value, name) in flags">
+            <label for="form-check-input">
+            <input
+            type="checkbox"
+            v-model="flags[name]"
+            >
+          {{ name }}
+            </label>
+          </div>
+          <hr>
+          <table class="table" :class="flags">
+            <tr>
+              <td>Title</td>
+              <td>some</td>
+              <td>nz</td>
+            </tr>
+            <tr>
+              <td>Title</td>
+              <td>some</td>
+              <td>nz</td>
+            </tr>
+            <tr>
+              <td>Title</td>
+              <td>some</td>
+              <td>nz</td>
+            </tr>
+          </table>
+  </div>
+  <script>
+    let vForm = new Vue({
+      el: '.vForm',
+      data: {
+        divClass: 'warning',
+        flags: {
+          'table-bordered': true,
+          'table-hover': true,
+          'table-some': false
+        }
+      },
+      computed: {
+        divClassName(){
+          return [
+            'alert-' + this.divClass,
+            'my-' + this.divClass
+          ]
+
+        }
+      }
+    });
+  </script>
+
+
+  <script src="http://localhost:35729/livereload.js"></script>
+</body>
+
+</html>

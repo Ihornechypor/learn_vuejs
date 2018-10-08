@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="vue.js"></script>
+
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container vForm">
+
+      <div class="form-group">
+        <label for="exampleInputFirstName">First Name</label>
+        <input type="text" class="form-control" id="exampleInputFirstName" aria-describedby="FirstNameHelp" placeholder="Enter First Name"
+        v-model.lazy.trim="phone"
+        @keyup.enter="show = true"
+
+        >
+
+      </div>
+      <div v-show="show">
+        {{phone}}
+      </div>
+
+
+
+
+
+  </div>
+  <script>
+    let vForm = new Vue({
+      el: '.vForm',
+      data: {
+        phone: '',
+        show: false
+      }
+    });
+  </script>
+
+
+  <script src="http://localhost:35729/livereload.js"></script>
+</body>
+
+</html>
