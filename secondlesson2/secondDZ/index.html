@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="vue.js"></script>
+
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container vForm">
+    <div class="progress">
+  <div class="progress-bar" style="width: 1%" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100"></div>
+  </div>
+    <form class="form">
+      <div v-for="(item, index, key) in info">
+        <label for="name">{{ item.name }} <span class="glyphicon gliphicon-ok"></span></label><br>
+        <input type="text" v-model="info[index].value">
+      </div>
+    </form>
+  <div class="results">
+    <ul>
+      <li v-for="(item, index, key) in info">
+      {{ info[index].value }}
+      </li>
+    </ul>
+  </div>
+
+    </div>
+  <script>
+    let vForm = new Vue({
+      el: '.vForm',
+      data: {
+				info: [
+					{
+						name: 'Name',
+						value: '',
+						pattern: /^[a-zA-Z ]{2,30}$/
+					},
+					{
+						name: 'Phone',
+						value: '',
+						pattern: /^[0-9]{7,14}$/
+					},
+					{
+						name: 'Email',
+						value: '',
+						pattern: /.+/
+					},
+					{
+						name: 'Field1',
+						value: '',
+						pattern: /.+/
+					},
+					{
+						name: 'Field2',
+						value: '',
+						pattern: /.+/
+					}
+        ]
+      },
+      computed: {
+
+
+
+      },
+      methods: {
+
+
+
+      },
+      beforeUpdate() {
+        
+      }
+    });
+  </script>
+
+
+  <script src="http://localhost:35729/livereload.js"></script>
+</body>
+
+</html>
