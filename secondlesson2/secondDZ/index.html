@@ -5,26 +5,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="bootstrap2.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <script src="vue.js"></script>
-
   <title>Document</title>
+  <style>
+    .btn.btn-danger {
+      pointer-events: none;
+      cursor: default;
+    }
+  </style>
 </head>
 
 <body>
   <div class="container vForm">
     <div class="progress">
-  <div class="progress-bar" style="width: 1%" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100"></div>
+  <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100" :style=[progressWidth]></div>
   </div>
-    <form class="form">
-      <div v-for="(item, index, key) in info">
-        <label for="name">{{ item.name }} <span class="glyphicon gliphicon-ok"></span></label><br>
-        <input type="text" v-model="info[index].value">
+    <form class="form" v-if="!formSubmit" @submit.prevent = "formSubmit = true">
+      <div v-for="(item, index, key) in info" :key="item.id">
+        <label for="name">  {{ item.name }} <i class="fab" :class="fieldSucsess" :style="[fieldSucsessProp]"></i>
+</label>
+        <br>
+        <input type="text" v-model="info[index].value" @keyup="clickCheck(index)">
       </div>
+      <br>
+      <button class="btn" :class="submitBtn" @submit.stop="">send</button>
     </form>
-  <div class="results">
+  <div class="results" v-else>
     <ul>
-      <li v-for="(item, index, key) in info">
+      <li v-for="(item, index) in info">
       {{ info[index].value }}
       </li>
     </ul>
@@ -35,6 +45,16 @@
     let vForm = new Vue({
       el: '.vForm',
       data: {
+        formSubmit: false,
+        fieldSucsess: 'fa-angellist',
+        fieldSucsessProp: {
+            color: 'red',
+            display: 'none'
+        },
+        progressWidth: {
+          width: ''
+        },
+        submitBtn: 'btn-danger',
 				info: [
 					{
 						name: 'Name',
@@ -64,17 +84,50 @@
         ]
       },
       computed: {
+        checkEmpty(){
+
+
+        }
 
 
 
       },
       methods: {
+        clickCheck(index){
+          let pattern = this.info[index].pattern;
+          if(pattern.test(this.info[index])){
+            this.fieldSucsessProp.display = 'inline';
+          }else if(!pattern.test(this.info[index])){
+            this.fieldSucsessProp.display = 'inline';
+            this.fieldSucsessProp.color = 'red';
+          }
+          // progress + btn start
+          let counter = 0;
+          let countedProps = 0;
+          for (key in this.info) {
+            countedProps++;
+            if (this.info[key].value == '') {
+              counter++;
+            }
+          }
+          let counterResult = countedProps - counter;
+          counterResult = (counterResult / countedProps) * 100;
+          this.progressWidth.width = counterResult + '%';
 
+          if (counterResult == 100){
+            return this.submitBtn = 'btn-success';
+
+          }
+
+          // progress + btn end
+
+        }
 
 
       },
       beforeUpdate() {
-        
+
+
       }
     });
   </script>
