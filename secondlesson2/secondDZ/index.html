@@ -14,6 +14,21 @@
         pointer-events: none;
         cursor: default;
       }
+
+
+      .form__error {
+      	color: red;
+      	text-align: left;
+      	font-size: 12px;
+      	display: block;
+      	margin-top: 3px;
+      	display: none;
+      }
+
+
+
+
+
     </style>
   </head>
 
@@ -23,11 +38,16 @@
     <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100" :style=[progressWidth]></div>
     </div>
       <form class="form" v-if="!formSubmit" @submit.prevent = "formSubmit = true">
-        <div v-for="(item, index, key) in info" :key="item.id">
-          <label for="name">  {{ item.name }} <i class="fab" :class="fieldSucsess" :style="[fieldSucsessProp]"></i>
-  </label>
-          <br>
-          <input type="text" v-model="info[index].value" @keyup="clickCheck(index)">
+        <div v-for="(item, index) in info" :key="item.id">
+          <label :for="item.name">
+            {{ item.name }}
+            <i class="fab" :class="fieldSucsess" :style="[fieldSucsessProp]"></i>
+          </label><br>
+
+            <input type="text" :id="item.name" v-model="info[index].value" @keyup="clickCheck(index)">
+
+
+
         </div>
         <br>
         <button class="btn" :class="submitBtn" @submit.stop="">send</button>
@@ -48,8 +68,9 @@
           formSubmit: false,
           fieldSucsess: 'fa-angellist',
           fieldSucsessProp: {
-              color: 'red',
-              display: 'none'
+            display: 'none',
+            color:'red'
+
           },
           progressWidth: {
             width: ''
@@ -99,15 +120,19 @@
             inputCollection = inputCollection[index].children[0];
 
 
-
-
-            if(pattern.test(this.info[index])){
+            if(pattern.test(this.info[index].value)){
+              inputCollection.classList.add('correct');
               inputCollection.style.display = 'inline';
               inputCollection.style.color = 'green';
-
-            }else if(!pattern.test(this.info[index])){
+            }else if(!pattern.test(this.info[index].value)){
+              inputCollection.classList.remove('correct');
               inputCollection.style.display = 'inline';
+              inputCollection.style.color = 'red';
             }
+            let checkFields = document.querySelectorAll('.fab').length;
+            let trueFields = document.querySelectorAll('.correct').length;
+
+            console.log(trueFields);
             // progress + btn start
             let counter = 0;
             let countedProps = 0;
@@ -118,10 +143,12 @@
               }
             }
             let counterResult = countedProps - counter;
+            let successFields = checkFields == trueFields;
+
             counterResult = (counterResult / countedProps) * 100;
             this.progressWidth.width = counterResult + '%';
 
-            if (counterResult == 100){
+            if (counterResult == 100 && successFields == true){
               return this.submitBtn = 'btn-success';
 
             }
@@ -133,7 +160,6 @@
 
         },
         beforeUpdate() {
-
 
 
         }
