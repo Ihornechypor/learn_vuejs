@@ -114,6 +114,11 @@
             let pattern = this.info[index].pattern;
             let inputCollection = document.querySelectorAll('.form div label');
             let trueField = pattern.test(this.info[index].value);
+
+                        let checkFields = document.querySelectorAll('.fab').length;
+                        let trueFields = document.querySelectorAll('.correct').length;
+                        let falseFileds = document.querySelectorAll('.incorrect').length;
+
             inputCollection = inputCollection[index].children[0];
 
 
@@ -128,28 +133,21 @@
               inputCollection.style.color = 'red';
             }
 
-            let checkFields = document.querySelectorAll('.fab').length;
-            let trueFields = document.querySelectorAll('.correct').length;
-            let falseFileds = document.querySelectorAll('.incorrect').length;
 
 
             // progress + btn start
             let counter = 0;
             let countedProps = 0;
             for (key in this.info) {
-
               countedProps++;
               if (this.info[key].value == '') {
                 counter++;
               }
             }
             let counterResult = countedProps - counter;
-      
-
+            let falseFiledsProportion = (falseFileds / countedProps) * 100;
             counterResult = (counterResult / countedProps) * 100;
             this.progressWidth.width = counterResult + '%';
-
-
             let successFields = checkFields == trueFields;
             if (counterResult == 100 && successFields == true){
               return this.submitBtn = 'btn-success';
