@@ -60,7 +60,7 @@
             <td v-if="agreeEmail">Yes</td>
             <td v-else>Now</td>
           </tr>
-          <tr>
+          <tr v-show="sendWay">
             <td>Chennel</td>
             <td>{{ sendWay }}</td>
           </tr>
