@@ -111,49 +111,7 @@
         },
         methods: {
           clickCheck(index){
-            let pattern = this.info[index].pattern;
-            let inputCollection = document.querySelectorAll('.form div label');
-            let trueField = pattern.test(this.info[index].value);
 
-                        let checkFields = document.querySelectorAll('.fab').length;
-                        let trueFields = document.querySelectorAll('.correct').length;
-                        let falseFileds = document.querySelectorAll('.incorrect').length;
-
-            inputCollection = inputCollection[index].children[0];
-            console.log(inputCollection.classList.contains('correct'));
-
-
-            if(trueField){
-              inputCollection.classList.add('correct');
-              inputCollection.style.display = 'inline';
-              inputCollection.style.color = 'green';
-            } else if (!trueField){
-              inputCollection.classList.remove('correct');
-              inputCollection.classList.add('incorrect');
-              inputCollection.style.display = 'inline';
-              inputCollection.style.color = 'red';
-            }
-
-
-
-            // progress + btn start
-            let counter = 0;
-            let countedProps = 0;
-            for (key in this.info) {
-              countedProps++;
-              if (this.info[key].value == '' && inputCollection.classList.contains('correct') ) {
-                counter++;
-              }
-            }
-            let counterResult = countedProps - counter;
-            let falseFiledsProportion = (falseFileds / countedProps) * 100;
-            counterResult = (counterResult / countedProps) * 100;
-            this.progressWidth.width = counterResult + '%';
-            let successFields = checkFields == trueFields;
-            if (counterResult == 100 && successFields == true){
-              return this.submitBtn = 'btn-success';
-
-            }
 
             // progress + btn end
 
