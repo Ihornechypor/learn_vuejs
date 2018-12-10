@@ -10,20 +10,7 @@
     <script src="vue.js"></script>
     <title>Document</title>
     <style>
-      .btn.btn-danger {
-        pointer-events: none;
-        cursor: default;
-      }
 
-
-      .form__error {
-      	color: red;
-      	text-align: left;
-      	font-size: 12px;
-      	display: block;
-      	margin-top: 3px;
-      	display: none;
-      }
 
 
 
@@ -35,23 +22,23 @@
   <body>
     <div class="container vForm">
       <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100" :style=[progressWidth]></div>
+    <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100"></div>
     </div>
       <form class="form" v-if="!formSubmit" @submit.prevent = "formSubmit = true">
         <div v-for="(item, index) in info" :key="item.id">
           <label :for="item.name">
             {{ item.name }}
-            <i class="fab" :class="fieldSucsess" :style="[fieldSucsessProp]"></i>
+            <i class="fab"></i>
           </label><br>
-            <input type="text" :id="item.name" v-model="info[index].value" @keyup="clickCheck(index)">
+            <input type="text" :id="item.name" :value="item.value" @input="changed(index, $event.target.value)">
         </div>
         <br>
-        <button class="btn" :class="submitBtn" @submit.stop="">send</button>
+        <button class="btn" @submit.stop="">send</button>
       </form>
-    <div class="results" v-else>
+    <div class="results">
       <ul>
         <li v-for="(item, index) in info">
-        {{ info[index].value }}
+        {{ item.value }}
         </li>
       </ul>
     </div>
@@ -62,16 +49,6 @@
         el: '.vForm',
         data: {
           formSubmit: false,
-          fieldSucsess: 'fa-angellist',
-          fieldSucsessProp: {
-            display: 'none',
-            color:'red'
-
-          },
-          progressWidth: {
-            width: ''
-          },
-          submitBtn: 'btn-danger',
   				info: [
   					{
   						name: 'Name',
@@ -98,25 +75,28 @@
   						value: '',
   						pattern: /.+/
   					}
-          ]
+          ],
+          controls: [],
         },
         computed: {
-          checkEmpty(){
-
-
-          }
-
-
 
         },
         methods: {
-          clickCheck(index){
-
-
-            // progress + btn end
+          changed(index, value){
+            console.log(index);
+            console.log(value);
 
           }
 
+
+        },
+        beforeMount(){
+          for(let i = 0; i < this.info.length; i++){
+            this.controls.push({
+              error: true,
+              active: ''
+            });
+          }
 
         }
       });
