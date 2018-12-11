@@ -19,6 +19,7 @@
   pointer-events: auto;
   cursor: pointer;
   background-color: green;
+  color: white;
   }
 
   </style>
@@ -122,7 +123,11 @@
         for (let i = 0; i < this.controls.length; i++) {
           if(this.controls[i].error == false && this.controls[i].active == true){
             counter++;
+          } else{
+              counter--;
           }
+
+
         }
         proportion = (counter / this.controls.length) * 100;
         this.progressWidth.width = proportion + '%';
