@@ -1,109 +1,142 @@
-  <!DOCTYPE html>
-  <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="bootstrap2.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <script src="vue.js"></script>
-    <title>Document</title>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap2.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <script src="vue.js"></script>
+  <title>Document</title>
+  <style>
 
+  .btn.btn-danger {
+  pointer-events: none;
+  cursor: default;
+  }
+  .btn.btn-true {
+  pointer-events: auto;
+  cursor: pointer;
+  background-color: green;
+  }
 
+  </style>
+</head>
 
-
-
-
-    </style>
-  </head>
-
-  <body>
-    <div class="container vForm">
-      <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100"></div>
+<body>
+  <div class="container vForm">
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100" :style="[progressWidth]"></div>
     </div>
-      <form class="form" v-if="!formSubmit" @submit.prevent = "formSubmit = true">
-        <div v-for="(item, index) in info" :key="item.id">
-          <label :for="item.name">
-            {{ item.name }}
-            <i class="fab"></i>
-          </label><br>
-            <input type="text" :id="item.name" :value="item.value" @input="changed(index, $event.target.value)">
-        </div>
+    <form class="form" v-if="!formSubmit" @submit.prevent = "formSubmit = true">
+      <div v-for="(item, index) in info" :key="item.id">
+        <label :for="item.name">
+          {{ item.name }}
+          <i class="fa fa-exclamation-circle" v-show="controls[index].active" ref='icons'></i>
+        </label>
         <br>
-        <button class="btn" @submit.stop="">send</button>
-      </form>
-    <div class="results">
+        <input type="text" :id="item.name" :value="item.value" @input="changed(index, $event.target.value)">
+      </div>
+      <br>
+      <button class="btn" :class="submitBtn">send</button>
+    </form>
+    <div class="results" v-else>
       <ul>
         <li v-for="(item, index) in info">
-        {{ item.value }}
+          {{ item.value }}
         </li>
       </ul>
     </div>
-
-      </div>
-    <script>
-      let vForm = new Vue({
-        el: '.vForm',
-        data: {
-          formSubmit: false,
-  				info: [
-  					{
-  						name: 'Name',
-  						value: '',
-  						pattern: /^[a-zA-Z ]{2,30}$/
-  					},
-  					{
-  						name: 'Phone',
-  						value: '',
-  						pattern: /^[0-9]{7,14}$/
-  					},
-  					{
-  						name: 'Email',
-  						value: '',
-  						pattern: /.+/
-  					},
-  					{
-  						name: 'Field1',
-  						value: '',
-  						pattern: /.+/
-  					},
-  					{
-  						name: 'Field2',
-  						value: '',
-  						pattern: /.+/
-  					}
-          ],
-          controls: [],
+  </div>
+  <script>
+  let vForm = new Vue({
+    el: '.vForm',
+    data: {
+      formSubmit: false,
+      submitBtn: 'btn-danger',
+      trueData: false,
+      progressWidth: {
+        width: '0'
+      },
+      info: [
+        {
+          name: 'Name',
+          value: '',
+          pattern: /^[a-zA-Z ]{2,30}$/
         },
-        computed: {
-
+        {
+          name: 'Phone',
+          value: '',
+          pattern: /^[0-9]{7,14}$/
         },
-        methods: {
-          changed(index, value){
-            console.log(index);
-            console.log(value);
-
-          }
-
-
+        {
+          name: 'Email',
+          value: '',
+          pattern: /.+/
         },
-        beforeMount(){
-          for(let i = 0; i < this.info.length; i++){
-            this.controls.push({
-              error: true,
-              active: ''
-            });
-          }
-
+        {
+          name: 'Field1',
+          value: '',
+          pattern: /.+/
+        },
+        {
+          name: 'Field2',
+          value: '',
+          pattern: /.+/
         }
-      });
-    </script>
+      ],
+      controls: [],
+
+    },
+    created(){
+      for(let i = 0; i < this.info.length; i++){
+        this.controls.push({
+          error: true,
+          active: false
+        });
+      }
+
+    },
+    computed: {
+      test(){
+
+      }
+
+    },
+    methods: {
+      changed(index, value){
+        let checkField = this.info[index].pattern;
+        let trueField = checkField.test(value);
+        this.info[index].value = value;
+        if(trueField){
+          this.controls[index].active = true;
+          this.controls[index].error = false;
+          this.$refs.icons[index].style.color = 'green';
+        } else if (!trueField){
+          this.controls[index].active = true;
+          this.$refs.icons[index].style.color = 'red';
+        }
+        let counter = 0;
+        let proportion;
+        for (let i = 0; i < this.controls.length; i++) {
+          if(this.controls[i].error == false && this.controls[i].active == true){
+            counter++;
+          }
+        }
+        proportion = (counter / this.controls.length) * 100;
+        this.progressWidth.width = proportion + '%';
+        if (counter === this.controls.length) {
+          this.submitBtn = 'btn-true';
+        }
+      }
+
+    }
+  });
+  </script>
 
 
-    <script src="http://localhost:35729/livereload.js"></script>
-  </body>
+  <script src="http://localhost:35729/livereload.js"></script>
+</body>
 
-  </html>
+</html>

@@ -22,7 +22,7 @@
   <div class="container">
     <div class="container vForm">
       <form class="form" v-if="!formSubmit" @submit.prevent="formSubmit = true">
-        <textarea id="agrement" name="name" rows="8" cols="80" v-model="agrement" style="resize:none" @scroll="showOther"></textarea>
+        <textarea id="agrement" name="name" rows="8" cols="80" v-model="agrement" style="resize:none" @scroll="showOther" ref="agrement"></textarea>
         <div class="results" v-show="textRead">
           <label for="agreText">
             <input type="checkbox" id="agreText" v-model="agreeText" value="Yes">
@@ -90,9 +90,9 @@
 
     methods: {
       showOther(){
-        let textAriaHeight = document.querySelector('#agrement').scrollHeight;
-        let textAriaScroll = document.querySelector('#agrement').scrollTop;
-        let textWindowHeight = document.querySelector('#agrement').clientHeight;
+        let textAriaHeight = this.$refs.agrement.scrollHeight;
+        let textAriaScroll = this.$refs.agrement.scrollTop;
+        let textWindowHeight = this.$refs.agrement.clientHeight;
         let textScrolledDown = textAriaScroll + textWindowHeight;
 
         if (textScrolledDown == textAriaHeight) {
