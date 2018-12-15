@@ -12,14 +12,12 @@
   <style>
 
   .btn.btn-danger {
-  pointer-events: none;
   cursor: default;
   }
   .btn.btn-true {
-  pointer-events: auto;
   cursor: pointer;
   background-color: green;
-    color: white;
+  color: white;
   }
 
   </style>
@@ -28,7 +26,7 @@
 <body>
   <div class="container vForm">
     <div class="progress">
-      <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100" :style="[progressWidth]"></div>
+      <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100" :style="progressWidth"></div>
     </div>
     <form class="form" v-if="!formSubmit" @submit.prevent = "formSubmit = true">
       <div v-for="(item, index) in info" :key="item.id">
@@ -36,11 +34,13 @@
           {{ item.name }}
           <i class="fa fa-exclamation-circle" v-show="controls[index].active" ref='icons'></i>
         </label>
+
         <br>
         <input type="text" :id="item.name" :value="item.value" @input="changed(index, $event.target.value)">
       </div>
       <br>
-      <button class="btn" :class="submitBtn">send</button>
+      <button class="btn" :class="alltrue" :disabled="fildsTrue < info.length">send</button>
+
     </form>
     <div class="results" v-else>
       <ul>
@@ -55,11 +55,7 @@
     el: '.vForm',
     data: {
       formSubmit: false,
-      submitBtn: 'btn-danger',
       trueData: false,
-      progressWidth: {
-        width: '0'
-      },
       info: [
         {
           name: 'Name',
@@ -90,20 +86,13 @@
       controls: [],
 
     },
-    created(){
+    beforeMount(){
       for(let i = 0; i < this.info.length; i++){
         this.controls.push({
           error: true,
           active: false
         });
       }
-
-    },
-    computed: {
-      test(){
-
-      }
-
     },
     methods: {
       changed(index, value){
@@ -116,23 +105,33 @@
           this.$refs.icons[index].style.color = 'green';
         } else if (!trueField){
           this.controls[index].active = true;
+          this.controls[index].error = true;
           this.$refs.icons[index].style.color = 'red';
         }
-        let counter = 0;
-        let proportion;
-        for (let i = 0; i < this.$refs.icons.length; i++) {
-          if(this.$refs.icons[i].style.color == 'green') {
-              counter++;
+
+      }
+    },
+    computed:{
+      fildsTrue(){
+        let fildsTrue = 0;
+        for (let i = 0; i < this.controls.length; i++) {
+          if(!this.controls[i].error) {
+              fildsTrue++;
           }
         }
-        proportion = (counter / this.controls.length) * 100;
-        this.progressWidth.width = proportion + '%';
-        if (counter === this.controls.length) {
-          this.submitBtn = 'btn-true';
-        } else {
-            this.submitBtn = 'btn-danger';
+        return fildsTrue;
+      },
+      progressWidth(){
+        return {
+          width: (this.fildsTrue / this.controls.length * 100) + '%'
         }
-
+      },
+      alltrue(){
+        if (this.fildsTrue === this.controls.length) {
+          return 'btn-true';
+        } else {
+            return 'btn-danger';
+        }
       }
 
     }
