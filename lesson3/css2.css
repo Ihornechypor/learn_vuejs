@@ -1,0 +1,12 @@
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
+div {
+  margin-bottom: 10px;
+}
+input {
+  margin-bottom: 10px;
+}
