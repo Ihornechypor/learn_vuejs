@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap3.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <script src="vue2.js"></script>
+  <title>Document</title>
+  <style>
+  .container {
+    margin-top: 10px;
+  }
+
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="comp">
+      <app-comp v-for="(item,index,test) in info"   :key="index"
+                                               :name="item.name"
+                                               :value="item.value"
+                                               :index="index"
+                                               :test="info.length"
+                                               @values = "onchaged">
+
+      </app-comp>
+      <!-- <app-comp-total v-for="(some,index) in info" :value="some.value">
+
+
+
+      </app-comp-total> -->
+      <div class="results">
+        <ul>
+          <li v-for="(item, index) in info">
+            {{ item.value }}
+          </li>
+        </ul>
+      </div>
+
+
+    </div>
+
+  </div>
+
+  <script>
+  Vue.component('app-comp', {
+    props: ['name','index', 'test'],
+    controls: [],
+    template:
+    `
+    <div class="container vForm">
+      <form class="form">
+      <div>
+        <label :for="this.name">
+          {{ this.name }}
+          <i class="fa fa-exclamation-circle" :ref="icon"></i>
+        </label>
+        <br>
+        <input type="text" @input="changed($event.target.value)">
+      </div>
+      </form>
+    </div>
+    `,
+    beforeMount(){
+      // for(let i = 0; i < this.test.length; i++){
+      //   controls.push({
+      //     error: true,
+      //     active: false
+      //   });
+      // }
+    },
+    computed:{
+
+    },
+    methods:{
+      changed(value){
+        this.$emit('values', {
+                              indexValue: this.index,
+                              checkedValue: value
+                            });
+      }
+    }
+
+  });
+  // Vue.component('app-comp-total', {
+  //   props: ['value'],
+  //   template:
+  //   `
+  //   `,
+  //   computed:{
+  //   },
+  //   methods:{
+  //   }
+  //
+  // });
+  let comp = new Vue({
+    el: '.comp',
+    props: ['some'],
+    data: {
+      info: [
+        {
+          name: 'Name',
+          value: '',
+          pattern: /^[a-zA-Z ]{2,30}$/
+        },
+        {
+          name: 'Phone',
+          value: '',
+          pattern: /^[0-9]{7,14}$/
+        },
+        {
+          name: 'Email',
+          value: '',
+          pattern: /.+/
+        },
+        {
+          name: 'Field1',
+          value: '',
+          pattern: /.+/
+        },
+        {
+          name: 'Field2',
+          value: '',
+          pattern: /.+/
+        }
+      ]
+
+    },
+
+    computed: {
+
+
+    },
+    methods: {
+      onchaged(data){
+        this.info[data.indexValue].value = data.checkedValue;
+      }
+
+    }
+
+  });
+  </script>
+
+
+
+  <script src="http://localhost:35729/livereload.js"></script>
+</body>
+
+</html>
