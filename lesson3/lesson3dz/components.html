@@ -13,17 +13,23 @@
   .container {
     margin-top: 10px;
   }
+  .btn.btn-true {
+  background-color: green;
+  color: white;
+  }
 
 
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="comp">
+  <div class="container comp">
+    <div class="container vForm">
+    <form class="form" @submit.prevent = "formSubmit = true">
+    <div v-if="!formSubmit">
       <app-com-progress :done="done"
-                        :controlslength="controls.length">
-
+                        :controlslength="controls.length"
+                        >
       </app-com-progress>
       <app-comp v-for="(item,index) in info"
                                                :key="index"
@@ -33,19 +39,23 @@
                                                :patterns="item.pattern"
                                                :objlength="info.length"
                                                @values = "onchaged"
-
                                                >
-
       </app-comp>
+
+      <app-comp-done :done="done"
+                     :objlength="info.length"
+                     >
+      </app-comp-done>
+
+    </div>
+    <div v-else>
       <app-comp-total v-for="(item,index) in info"
                                                    :key="item.id"
                                                    :valued="item.value"
                                                    >
       </app-comp-total>
-      <app-comp-done>
-
-      </app-comp-done>
-
+    </div>
+    </form>
 
 
     </div>
@@ -54,7 +64,7 @@
 
   <script>
   Vue.component('app-comp', {
-    props: ['name','index','objlength','patterns'],
+    props: ['name','index','objlength','patterns','value'],
     data(){
       return {
         activated: this.value != ''
@@ -62,25 +72,25 @@
     },
     template:
     `
-    <div class="container vForm">
-      <form class="form">
+
       <div>
         <label :for="this.name">
           {{ this.name }}
-          <i class="fa fa-exclamation-circle" ref="icon"></i>
+          <i class="fa fa-exclamation-circle" ref="icon" v-show="activated"></i>
         </label>
         <br>
         <input type="text" @input="changed($event.target.value)">
       </div>
-      </form>
-    </div>
+
     `,
+
     computed:{
 
 
     },
     methods:{
       changed(value){
+        this.activated = true;
         let icon = this.$refs.icon;
         let checkField = this.patterns;
         let trueField = checkField.test(value);
@@ -119,7 +129,7 @@
     template:
     `
     <div class="progress">
-      <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100" :style="progressWidth"></div>
+      <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100"  :style="progressWidth"></div>
     </div>
     `,
     computed: {
@@ -130,13 +140,25 @@
       },
     },
   });
-  Vue.component('app-com-done', {
+  Vue.component('app-comp-done', {
+    props: ['done','objlength'],
     template:
     `
+    <div>
+      <br />
+      <button class="btn" :class="alltrue" :disabled="this.done < this.objlength">send</button>
 
+    </div>
     `,
     computed: {
-      
+      alltrue(){
+        if (this.done === this.objlength) {
+          return 'btn-true';
+        } else {
+            return 'btn-danger';
+        }
+      }
+
     }
 
   });
@@ -171,7 +193,8 @@
         }
       ],
       controls: [],
-      done: 0
+      done: 0,
+      formSubmit: false
     },
     created(){
       for(let i = 0; i < this.info.length; i++){
