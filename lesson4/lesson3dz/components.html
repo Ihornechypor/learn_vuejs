@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap3.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <script src="vue2.js"></script>
+  <title>Document</title>
+  <style>
+  .container {
+    margin-top: 10px;
+  }
+  .btn.btn-true {
+  background-color: green;
+  color: white;
+  }
+
+
+  </style>
+</head>
+
+<body>
+  <div class="container comp">
+    <div class="container vForm">
+    <form class="form" @submit.prevent = "formSubmit = true">
+    <div v-if="!formSubmit">
+      <app-com-progress :done="done"
+                        :controlslength="controls.length"
+                        >
+      </app-com-progress>
+      <app-comp v-for="(item,index) in info"
+                                               :key="index"
+                                               :name="item.name"
+                                               :value="item.value"
+                                               :index="index"
+                                               :patterns="item.pattern"
+                                               :objlength="info.length"
+                                               @values = "onchaged"
+                                               >
+      </app-comp>
+
+      <app-comp-done :done="done"
+                     :objlength="info.length"
+                     >
+      </app-comp-done>
+
+    </div>
+    <div v-else>
+      <app-comp-total v-for="(item,index) in info"
+                                                   :key="item.id"
+                                                   :valued="item.value"
+                                                   >
+      </app-comp-total>
+    </div>
+    </form>
+
+
+    </div>
+
+  </div>
+
+  <script>
+  Vue.component('app-comp', {
+    props: ['name','index','objlength','patterns','value'],
+    data(){
+      return {
+        activated: this.value != ''
+      }
+    },
+    template:
+    `
+
+      <div>
+        <label :for="this.name">
+          {{ this.name }}
+          <i class="fa fa-exclamation-circle" ref="icon" v-show="activated"></i>
+        </label>
+        <br>
+        <input type="text" @input="changed($event.target.value)">
+      </div>
+
+    `,
+
+    computed:{
+
+
+    },
+    methods:{
+      changed(value){
+        this.activated = true;
+        let icon = this.$refs.icon;
+        let checkField = this.patterns;
+        let trueField = checkField.test(value);
+        if(trueField){
+          icon.style.color = 'green';
+        } else if (!trueField){
+          icon.style.color = 'red';
+        }
+
+        this.$emit('values', {
+                              indexValue: this.index,
+                              value,
+                              trueField,
+                              activated: this.activated
+                            });
+      }
+    }
+
+  });
+  Vue.component('app-comp-total', {
+    props: ['valued'],
+    template:
+    `
+    <div class="results">
+      <ul>
+        <li>
+          {{ this.valued }}
+        </li>
+      </ul>
+    </div>
+
+    `
+  });
+  Vue.component('app-com-progress', {
+    props: ['done','controlslength'],
+    template:
+    `
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="15" aria-valuemax="100"  :style="progressWidth"></div>
+    </div>
+    `,
+    computed: {
+      progressWidth(){
+        return {
+          width: (this.done / this.controlslength * 100) + '%'
+        }
+      },
+    },
+  });
+  Vue.component('app-comp-done', {
+    props: ['done','objlength'],
+    template:
+    `
+    <div>
+      <br />
+      <button class="btn" :class="alltrue" :disabled="this.done < this.objlength">send</button>
+
+    </div>
+    `,
+    computed: {
+      alltrue(){
+        if (this.done === this.objlength) {
+          return 'btn-true';
+        } else {
+            return 'btn-danger';
+        }
+      }
+
+    }
+
+  });
+  let comp = new Vue({
+    el: '.comp',
+    data: {
+      info: [
+        {
+          name: 'Name',
+          value: '',
+          pattern: /^[a-zA-Z ]{2,30}$/
+        },
+        {
+          name: 'Phone',
+          value: '',
+          pattern: /^[0-9]{7,14}$/
+        },
+        {
+          name: 'Email',
+          value: '',
+          pattern: /.+/
+        },
+        {
+          name: 'Field1',
+          value: '',
+          pattern: /.+/
+        },
+        {
+          name: 'Field2',
+          value: '',
+          pattern: /.+/
+        }
+      ],
+      controls: [],
+      done: 0,
+      formSubmit: false
+    },
+    created(){
+      for(let i = 0; i < this.info.length; i++){
+        this.controls.push({
+          active: false,
+          error: true
+        });
+      }
+    },
+    computed: {
+
+    },
+    methods: {
+      onchaged(data){
+        this.info[data.indexValue].value = data.value;
+        this.controls[data.indexValue].active = data.activated;
+        this.controls[data.indexValue].noerror = data.trueField;
+        let done = 0;
+        for (let i = 0; i < this.controls.length; i++) {
+          if(this.controls[i].noerror) {
+              done++;
+          }
+        }
+        this.done = done;
+      }
+
+    }
+
+  });
+  </script>
+
+
+
+  <script src="http://localhost:35729/livereload.js"></script>
+</body>
+
+</html>

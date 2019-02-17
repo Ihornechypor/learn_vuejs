@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap3.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <script src="vue2.js"></script>
+  <title>Document</title>
+  <style>
+  .container {
+    margin-top: 10px;
+  }
+  .btn.btn-true {
+  background-color: green;
+  color: white;
+  }
+
+
+  </style>
+</head>
+
+<body>
+  <div class="container prop">
+    <button class="btn btn-danger" @click="ul = !ul">
+      toggle
+    </button>
+    <keep-alive>
+      <component :is="isSome" :items="list"></component>
+    </keep-alive>
+
+
+
+  </div>
+  <script>
+
+  Vue.component('comp-app-ul', {
+    props: {
+      items: null
+    },
+
+    template:  `
+    <div>
+    <ul><li v-for="item in items">{{ item }}</li></ul>
+
+    </div>`,
+    created() {
+      console.log('ul');
+
+    }
+
+  });
+  Vue.component('comp-app-ol', {
+    props: {
+      items: null
+    },
+
+    template:  `
+    <div>
+    <ol><li v-for="item in items">{{ item }}</li></ol>
+
+    </div>
+    `,
+    created() {
+          console.log('ul');
+
+        }
+
+  });
+   new Vue({
+    el: '.prop',
+    data: {
+      list:['some','items','for','list'],
+      ul: true
+    },
+    computed: {
+      isSome(){
+        return this.ul ? 'comp-app-ul' : 'comp-app-ol'
+
+      }
+    }
+  });
+
+  </script>
+
+
+
+  <script src="http://localhost:35729/livereload.js"></script>
+</body>
+
+</html>
