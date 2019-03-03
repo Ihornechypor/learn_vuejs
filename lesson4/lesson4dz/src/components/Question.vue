@@ -11,10 +11,11 @@
           <tr v-for="(item,index) in this.answers">
             <td width="30px">
               <input
-                  name="userAnswer"
-                  :type="type"
-                  :value="answers[index]"
-                  @input="answered($event.target.value)"
+                  name = "userAnswer"
+                  ref = "checkedAnswers"
+                  :type = "type"
+                  :value = "answers[index]"
+                  @input = "answered($event)"
                   >
             </td>
             <td >
@@ -35,20 +36,24 @@
     methods: {
       answered(value){
         let answer = [];
+        let checkedAnswers = this.$refs.checkedAnswers;
+        for(let i = 0; i < checkedAnswers.length; i++){
+          if(checkedAnswers[i].checked == true){
+            answer.push(checkedAnswers[i].value);
+          }
+
+        }
         let userNoActivated = this.userAnswered[this.caunter].userNoActivated;
-        if (value == '') {
+        if (value.target.checked !== true && answer == '') {
           userNoActivated = true
         } else {
           userNoActivated = false
         }
-        answer.push(value);
         let userAnswerIndex = this.caunter;
         this.$emit('userAnswers', {
                             userAnswerIndex,
                             userNoActivated,
                             answer
-
-
                         });
       }
 

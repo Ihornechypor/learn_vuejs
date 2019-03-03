@@ -20,7 +20,7 @@
           <tbody>
             <tr v-for="item in this.userAnswered">
               <td >
-                {{ item.userAswer  }}
+                {{ item.userAswer }}
               </td>
             </tr>
           </tbody>

@@ -79,7 +79,7 @@ created() {
 methods: {
   answered(data) {
     this.userAnswered[data.userAnswerIndex].userNoActivated = data.userNoActivated;
-    this.userAnswered[data.userAnswerIndex].userAswer = data.answer;
+    this.userAnswered[data.userAnswerIndex].userAswer = data.answer.join();
 
   },
   nextAnswer(data) {
