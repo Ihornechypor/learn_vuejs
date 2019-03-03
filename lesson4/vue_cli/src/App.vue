@@ -18,7 +18,7 @@
                                                    >
     </AppInput>
     <AppCorrect  :done="done"
-          :objlength="info.length"
+                 :objlength="info.length"
           >
     </AppCorrect>
     </div>
