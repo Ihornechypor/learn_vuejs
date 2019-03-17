@@ -1,12 +1,12 @@
 <template>
     <div class="container">
     <form class="form" @submit.prevent = "formSubmit = true">
-    <div v-if="!formSubmit">
+      <transition name="boom" mode="out-in">
+    <div v-if="!formSubmit" key="c">
       <AppProgress :done="done"
                         :controlslength="controls.length"
                         >
       </AppProgress>
-
     <AppInput  v-for="(item,index) in info"
                                                    :key="index"
                                                    :name="item.name"
@@ -22,13 +22,14 @@
           >
     </AppCorrect>
     </div>
-    <div v-else>
+    <div v-else key="b">
       <AppTotal v-for="(item,index) in info"
                                                    :key="item.id"
                                                    :valued="item.value"
                                                    >
       </AppTotal>
     </div>
+    </transition>
 
 
 </form>
@@ -111,8 +112,37 @@ import AppTotal from  './components/Total';
 
   }
 </script>
-<style scoped>
+<style>
 .container {
   margin-top: 10px;
 }
+.boom-enter {
+}
+.boom-enter-active {
+    animation: slideIn 0.5s;
+
+}
+.boom-enter-to {
+
+}
+
+.boom-leave {
+}
+.boom-leave-active {
+  animation-name: slideOut 0.5s;
+}
+.boom-leave-to {
+}
+
+@keyframes slideIn {
+  from{transform: translateX(2000px);}
+  to{ransform: translateX(0px);}
+
+}
+@keyframes slideOut {
+  from{transform: translateX(0px);}
+  to{transform: translateX(-2000px);}
+
+}
+
 </style>
