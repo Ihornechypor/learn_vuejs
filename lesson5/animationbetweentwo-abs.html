@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap3.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css">
+  <script src="vue2.js"></script>
+  <title>Document</title>
+
+</head>
+<div class="container">
+  <div class="mixin">
+    <button class="btn btn-danger" @click="show = !show">
+      show
+    </button>
+      <transition name="boom" mode="out-in">
+        <div class="show-text alert alert-danger" v-if="show" key="1" >
+          <div class="div">some text some text</div>
+          <div class="div">some text some text</div>
+          <div class="div">some text some text</div>
+        </div>
+        <div class="show-text alert alert-success" v-else key="2">
+          <div class="div">some text some text</div>
+          <div class="div">some text some text</div>
+          <div class="div">some text some text</div>
+        </div>
+      </transition>
+
+  </div>
+
+</div>
+
+<body>
+
+  <script>
+
+   new Vue({
+    el: '.mixin',
+    data: {
+      show: true,
+      text: 'some text'
+    }
+
+  });
+
+
+  </script>
+  <style>
+  .container {
+    margin-top: 10px;
+  }
+  .btn {
+    margin: 10px 0;
+  }
+  .boom-enter {
+  }
+  .boom-enter-active {
+      animation: slideIn 0.5s;
+
+  }
+  .boom-enter-to {
+
+  }
+
+  .boom-leave {
+  }
+  .boom-leave-active {
+    animation-name: slideOut 0.5s;
+  }
+  .boom-leave-to {
+  }
+
+  @keyframes slideIn {
+    from{transform: translateX(2000px);}
+    to{ransform: translateX(0px);}
+
+  }
+  @keyframes slideOut {
+    from{transform: translateX(0px);}
+    to{transform: translateX(-2000px);}
+
+  }
+
+
+  </style>
+
+
+</body>
+
+</html>

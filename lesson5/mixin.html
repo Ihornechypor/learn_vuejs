@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap3.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <script src="vue2.js"></script>
+  <title>Document</title>
+  <style>
+  .container {
+    margin-top: 10px;
+  }
+  .btn.btn-true {
+  background-color: green;
+  color: white;
+  }
+
+
+  </style>
+</head>
+<div class="container">
+  <div class="mixin">
+    <button class="btn btn-danger" @click="show = !show">
+      show
+    </button>
+
+    <div class="show-text" v-show="show">
+      {{ show }}
+    </div>
+
+  </div>
+  <div class="mixin2">
+    <button class="btn btn-danger" @click="show = !show">
+      show
+    </button>
+    <div class="show-text" v-show="show">
+      {{ show }}
+  </div>
+
+
+  </div>
+</div>
+
+<body>
+
+  <script>
+    let mixinUpdatesLogger = {
+      data:{
+          counter: 0
+      },
+      updated(){
+          this.counter++
+          console.log(this.counter);
+      }
+
+    };
+
+
+   new Vue({
+    el: '.mixin',
+    data: {
+      show: true
+    },
+    mixins: [mixinUpdatesLogger],
+
+  });
+  new Vue({
+   el: '.mixin2',
+   data: {
+     show: true
+   }
+
+ });
+
+  </script>
+
+
+</body>
+
+</html>

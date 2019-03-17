@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1</title>
+    <link rel="stylesheet" href="css//bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="js/vue.js"></script>
+</head>
+<body>
+   <div class="container">
+	   <div class="sample">
+			<button class="btn btn-primary" @click="show = !show">Toggle</button>
+			<transition mode="out-in"
+						:css="false"
+						@before-enter="beforeEnter"
+						@enter="enter"
+						@leave="leave"
+    					>	
+				<div class="alert alert-success" v-if="show" key="first">
+					<p>Some text about some</p>
+					<p>Some text about some</p>
+					<p>Some text about some</p>
+					<p>Some text about some</p>
+				</div>
+				<div class="alert alert-danger" v-else="show" key="second">
+					<p>1 Some text about some</p>
+					<p>2 Some text about some</p>
+					<p>3 Some text about some</p>
+					<p>4 Some text about some</p>
+				</div>
+			</transition>
+		</div>
+	</div>
+<script>
+	
+	new Vue({
+		el: '.sample',
+		data: {
+			show: true
+		},
+		methods: {
+			beforeEnter(el){
+				el.style.opacity = 0;
+			},
+			enter(el, done){
+				let time = 500;
+				let fps = 50;
+				let fr = 1000 / fps;
+				let steps = time / fr;
+				let d = 1 / steps;
+				let step = 0;
+				let o = 0;
+
+				let timer = setInterval(() => {
+					step++;
+					o += d;
+					el.style.opacity = o;
+
+					if(step >= steps){
+						clearInterval(timer);
+						el.style.opacity = 1;
+						done();
+					}
+				}, fr);
+			},
+			leave(el, done){
+				let time = 500;
+				let fps = 50;
+				let fr = 1000 / fps;
+				let steps = time / fr;
+				let d = 1 / steps;
+				let step = 0;
+				let o = 1;
+
+				let timer = setInterval(() => {
+					step++;
+					o -= d;
+					el.style.opacity = o;
+
+					if(step >= steps){
+						clearInterval(timer);
+						el.style.opacity = 0;
+						done();
+					}
+				}, fr);
+			}
+		}
+	});
+
+</script>
+<style>
+	.btn{
+		margin: 20px 0;
+	}
+</style>
+</body>
+</html>

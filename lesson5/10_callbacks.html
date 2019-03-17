@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1</title>
+    <link rel="stylesheet" href="css//bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="js/vue.js"></script>
+</head>
+<body>
+   <div class="container">
+	   <div class="sample">
+			<button class="btn btn-primary" @click="show = !show">Toggle</button>
+			<transition mode="out-in"
+						enter-active-class="animated tada"
+    					leave-active-class="animated bounceOutRight"
+						 @before-enter="beforeEnter"
+						 @enter="enter"
+						 @after-enter="afterEnter"
+						 @enter-cancelled="enterCancelled"
+						 @before-leave="beforeLeave"
+						 @leave="leave"
+						 @after-leave="afterLeave"
+						 @leave-cancelled="leaveCancelled"
+    					>	
+				<div class="alert alert-success" v-if="show" key="first">
+					<p>Some text about some</p>
+					<p>Some text about some</p>
+					<p>Some text about some</p>
+					<p>Some text about some</p>
+				</div>
+				<div class="alert alert-danger" v-else="show" key="second">
+					<p>1 Some text about some</p>
+					<p>2 Some text about some</p>
+					<p>3 Some text about some</p>
+					<p>4 Some text about some</p>
+				</div>
+			</transition>
+		</div>
+	</div>
+<script>
+	
+	new Vue({
+		el: '.sample',
+		data: {
+			show: true
+		},
+		methods: {
+			beforeEnter(){
+				console.log('beforeEnter');
+			},
+			enter(){
+				console.log('enter');
+			},
+			afterEnter(){
+				console.log('afterEnter');
+			},
+			enterCancelled(){
+				console.log('enterCancelled');
+			},
+			beforeLeave(){
+				console.log('beforeLeave');
+			},
+			leave(){
+				console.log('leave');
+			},
+			afterLeave(){
+				console.log('afterLeave');
+			},
+			leaveCancelled(){
+				console.log('leaveCancelled');
+			}
+		}
+	});
+
+</script>
+<style>
+	.btn{
+		margin: 20px 0;
+	}
+
+	.fade-enter{
+		
+	}
+
+	.fade-enter-active{
+		animation: slideIn 0.5s;	
+	}
+
+	.fade-enter-to{
+		
+	}
+
+	.fade-leave{
+		
+	}
+
+	.fade-leave-active{
+		animation: slideOut 0.5s forwards;
+	}
+
+	.fade-leave-to{
+		
+	}
+
+	@keyframes slideIn{
+		from{transform: translateX(-2000px);}
+		to{transform: translateX(0px);}
+	}
+
+	@keyframes slideOut{
+		from{transform: translateX(0px);}
+		to{transform: translateX(-2000px);}
+	}
+</style>
+</body>
+</html>
