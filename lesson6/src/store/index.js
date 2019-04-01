@@ -40,9 +40,9 @@ export const store = new Vuex.Store({
     actions: {
       sendOrder(store){
         store.commit('orderClick');
-        setTimeout()
+        setTimeout();
       }
 
-    }
+    },
     strict: process.env.NODE_EBN !== 'prodaction'
 });
