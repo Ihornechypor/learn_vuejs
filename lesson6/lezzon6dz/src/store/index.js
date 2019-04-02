@@ -79,10 +79,30 @@ export const store = new Vuex.Store({
 
     },
     mutations: {
+      updateControls(state){
+        for(let i = 0; i < state.info.length; i++){
+          state.controls.push({
+            active: false,
+            error: true
+          });
+        }
+      },
+      updateInputs(state, payload){
+        state.controls[payload.i].active = true;
+        console.log(payload.i);
 
+        // let checkField = this.info[i].pattern;
+        // let trueField = checkField.test(value);
+        // if(trueField){
+        //   icon.style.color = 'green';
+        // } else if (!trueField){
+        //   icon.style.color = 'red';
+        // }
+      }
 
     },
     actions: {
+
 
     },
     strict: process.env.NODE_EBN !== 'prodaction'
