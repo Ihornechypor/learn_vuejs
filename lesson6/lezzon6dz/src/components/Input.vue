@@ -2,11 +2,11 @@
   <div>
     <label :for="info[index].name">
       {{ info[index].name }}
-      <i class="fa fa-exclamation-circle" ref="icon" v-show="controls[index].active"></i>
+      <i :class="istTrue" v-show="controls[index].active"></i>
     </label>
     <br>
     <input type="text" @input="changed($event.target.value, index)">
-
+    {{ istTrue }}
   </div>
 
 </template>
@@ -21,7 +21,15 @@ export default {
     ...mapGetters([
       'info',
       'controls'
-    ])
+    ]),
+    istTrue(){
+      if(this.controls[this.index]){
+        return 'fa'
+      } else {
+        return 'fa fa-circle'
+      }
+
+    }
   },
   // data(){
   //   return {
@@ -39,7 +47,6 @@ export default {
   methods:{
     changed(val,i){
       this.$store.commit('updateInputs', {val, i})
-
     }
 
 
