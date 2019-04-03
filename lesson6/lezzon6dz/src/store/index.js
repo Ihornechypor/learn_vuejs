@@ -88,10 +88,11 @@ export const store = new Vuex.Store({
         }
       },
       updateInputs(state, payload){
-        let checkField = state.info[payload.i].pattern;
-        state.controls[payload.i].active = true;
-        state.controls[payload.i].error = checkField.test(payload.val);
-        state.$set(state.controls, payload.i, payload.val);
+        // let checkField = state.info[payload.i].pattern;
+        //state.controls[payload.i].active = true;
+        // state.controls[payload.i].error = checkField.test(payload.val);
+        Vue.set(state.controls[active], payload.i, 'active');
+        console.log(state.controls);
         // if(trueField){
         //   icon.style.color = 'green';
         // } else if (!trueField){

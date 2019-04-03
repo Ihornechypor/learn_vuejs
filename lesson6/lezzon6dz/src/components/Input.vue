@@ -23,11 +23,12 @@ export default {
       'controls'
     ]),
     istTrue(){
-      if(this.controls[this.index]){
-        return 'fa'
-      } else {
-        return 'fa fa-circle'
-      }
+      return 'fa fa-circle'
+      // if(this.controls[this.index]){
+      //   return 'fa'
+      // } else {
+      //   return 'fa-circle'
+      // }
 
     }
   },
