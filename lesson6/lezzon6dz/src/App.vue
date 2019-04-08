@@ -12,7 +12,7 @@
 
 
     </form>
-    <div v-show="formNoSubmit">
+    <div v-show="!formNoSubmit">
       <AppTotal v-for="(item, index) in info" :index="index"
                                               :valued.sync="item.value" >
       </AppTotal>

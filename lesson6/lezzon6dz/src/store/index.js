@@ -9,12 +9,12 @@ export const store = new Vuex.Store({
           info: [
             {
               name: 'Name',
-              value: 'dd',
+              value: '',
               pattern: /^[a-zA-Z ]{2,30}$/
             },
             {
               name: 'Phone',
-              value: '333',
+              value: '',
               pattern: /^[0-9]{7,14}$/
             },
             {
@@ -24,7 +24,7 @@ export const store = new Vuex.Store({
             },
             {
               name: 'Field1',
-              value: 'xxx',
+              value: '',
               pattern: /.+/
             },
             {
@@ -40,33 +40,7 @@ export const store = new Vuex.Store({
     },
     getters: {
       info(state){
-        return [
-          {
-            name: 'Name',
-            value: 'ss',
-            pattern: /^[a-zA-Z ]{2,30}$/
-          },
-          {
-            name: 'Phone',
-            value: 'ss',
-            pattern: /^[0-9]{7,14}$/
-          },
-          {
-            name: 'Email',
-            value: '',
-            pattern: /.+/
-          },
-          {
-            name: 'Field1',
-            value: '',
-            pattern: /.+/
-          },
-          {
-            name: 'Field2',
-            value: '',
-            pattern: /.+/
-          }
-        ]
+        return state.info
       },
       controlActive(state){
         return state.controlActive

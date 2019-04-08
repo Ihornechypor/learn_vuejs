@@ -1,7 +1,7 @@
 <template>
   <div>
     <label :for="info[index].name">
-      {{ info[index].name }}  {{info[index].value}}
+      {{ info[index].name }}  
       <i :class="istTrue" v-show="controlActive[index]"></i>
     </label>
     <br>
