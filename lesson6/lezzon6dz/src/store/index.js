@@ -9,12 +9,12 @@ export const store = new Vuex.Store({
           info: [
             {
               name: 'Name',
-              value: '',
+              value: 'dd',
               pattern: /^[a-zA-Z ]{2,30}$/
             },
             {
               name: 'Phone',
-              value: '',
+              value: '333',
               pattern: /^[0-9]{7,14}$/
             },
             {
@@ -24,7 +24,7 @@ export const store = new Vuex.Store({
             },
             {
               name: 'Field1',
-              value: '',
+              value: 'xxx',
               pattern: /.+/
             },
             {
@@ -33,21 +33,22 @@ export const store = new Vuex.Store({
               pattern: /.+/
             }
           ],
-          controls: [],
+          controlActive: [],
+          controlTrue: [],
           done: 0,
-          formSubmit: false
+          formNoSubmit: true
     },
     getters: {
       info(state){
         return [
           {
             name: 'Name',
-            value: '',
+            value: 'ss',
             pattern: /^[a-zA-Z ]{2,30}$/
           },
           {
             name: 'Phone',
-            value: '',
+            value: 'ss',
             pattern: /^[0-9]{7,14}$/
           },
           {
@@ -67,36 +68,48 @@ export const store = new Vuex.Store({
           }
         ]
       },
-      controls(state){
-        return state.controls
+      controlActive(state){
+        return state.controlActive
+      },
+      controlTrue(state){
+        return state.controlTrue
       },
       done(state){
         return state.done
       },
-      formSubmit(state){
-        return state.formSubmit
+      formNoSubmit(state){
+        return state.formNoSubmit
       }
 
     },
     mutations: {
       updateControls(state){
         for(let i = 0; i < state.info.length; i++){
-          state.controls.push({
-            active: false,
-            error: true
-          });
+          state.controlActive.push(false);
+        }
+        for(let i = 0; i < state.info.length; i++){
+          state.controlTrue.push(false);
         }
       },
+      formSubmitted(state){
+        state.formNoSubmit = false;
+      },
       updateInputs(state, payload){
-        let checkField = state.info[payload.i].pattern;
-        state.controls[payload.i].active = true;
-        state.controls[payload.i].error = checkField.test(payload.val);
-        state.$set(state.controls, payload.i, payload.val);
-        // if(trueField){
-        //   icon.style.color = 'green';
-        // } else if (!trueField){
-        //   icon.style.color = 'red';
-        // }
+         let checkField = state.info[payload.i].pattern;
+         let done = 0;
+
+         Vue.set(state.info[payload.i], 'value', payload.val);
+         console.log(state.info[payload.i].value)
+         Vue.set(state.controlTrue, payload.i, state.controlTrue[payload.i] = checkField.test(payload.val));
+         Vue.set(state.controlActive, payload.i, true);
+
+           for (let i = 0; i < state.controlTrue.length; i++) {
+             if(state.controlTrue[i]) {
+               done++;
+             }
+           }
+           state.done = done;
+
       }
 
     },

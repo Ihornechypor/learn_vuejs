@@ -1,19 +1,23 @@
 <template>
   <div class="container">
-    <form>
+    <form v-show="formNoSubmit" @submit.prevent>
       <!-- <transition name="boom" mode="out-in"> -->
         <div>
-          <!-- <AppProgress></AppProgress> -->
+          <AppProgress></AppProgress>
           <AppInput v-for="(item, index) in info" :index="index"></AppInput>
-          <!-- <AppCorrect></AppCorrect> -->
+          <AppCorrect></AppCorrect>
         </div>
-        <div>
-          <!-- <AppTotal></AppTotal> -->
-        </div>
+
       <!-- </transition> -->
 
 
     </form>
+    <div v-show="formNoSubmit">
+      <AppTotal v-for="(item, index) in info" :index="index"
+                                              :valued.sync="item.value" >
+      </AppTotal>
+
+    </div>
   </div>
 </template>
 <script>
@@ -31,28 +35,15 @@ export default {
   computed: {
     ...mapGetters([
       'info',
-      'controls'
+      'formNoSubmit'
     ])
   },
   created(){
     this.$store.commit('updateControls');
 
-
-
   },
   methods: {
-    // onchaged(data){
-    //   this.info[data.indexValue].value = data.value;
-    //   this.controls[data.indexValue].active = data.activated;
-    //   this.controls[data.indexValue].noerror = data.trueField;
-    //   let done = 0;
-    //   for (let i = 0; i < this.controls.length; i++) {
-    //     if(this.controls[i].noerror) {
-    //       done++;
-    //     }
-    //   }
-    //   this.done = done;
-    // }
+
 
   },
   components: {

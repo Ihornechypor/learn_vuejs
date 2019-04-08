@@ -2,13 +2,20 @@
   <div class="results">
     <ul>
       <li>
-        {{ this.valued }}
+         {{ valued  }}
       </li>
     </ul>
   </div>
 </template>
 <script>
+import {mapGetters} from 'vuex';
+
   export default {
-    props: ['valued']
+    props: ['index','valued'],
+    computed: {
+      ...mapGetters([
+        'info'
+      ])
+    }
   }
 </script>

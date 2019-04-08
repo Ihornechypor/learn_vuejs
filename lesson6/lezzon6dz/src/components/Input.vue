@@ -1,12 +1,12 @@
 <template>
   <div>
     <label :for="info[index].name">
-      {{ info[index].name }}
-      <i :class="istTrue" v-show="controls[index].active"></i>
+      {{ info[index].name }}  {{info[index].value}}
+      <i :class="istTrue" v-show="controlActive[index]"></i>
     </label>
     <br>
     <input type="text" @input="changed($event.target.value, index)">
-    {{ istTrue }}
+
   </div>
 
 </template>
@@ -20,30 +20,18 @@ export default {
   computed: {
     ...mapGetters([
       'info',
-      'controls'
+      'controlActive',
+      'controlTrue'
     ]),
     istTrue(){
-      if(this.controls[this.index]){
-        return 'fa'
+      if(this.controlTrue[this.index]){
+        return 'fa fa-exclamation-circle'
       } else {
-        return 'fa fa-circle'
+        return 'fa fa-exclamation-circle red'
       }
 
     }
   },
-  // data(){
-  //   return {
-  //     controls: []
-  //   }
-  // },
-  // created(){
-  //   for(let i = 0; i < this.info.length; i++){
-  //     this.controls.push({
-  //       active: false,
-  //       error: true
-  //     });
-  //   }
-  // },
   methods:{
     changed(val,i){
       this.$store.commit('updateInputs', {val, i})
@@ -55,3 +43,9 @@ export default {
 
 }
 </script>
+<style scoperd>
+.red {
+  color: red;
+}
+
+</style>

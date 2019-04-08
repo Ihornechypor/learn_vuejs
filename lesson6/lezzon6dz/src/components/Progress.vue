@@ -8,12 +8,17 @@
 
 </template>
 <script>
+import {mapGetters} from 'Vuex'
+
   export default {
-    props: ['done','controlslength'],
     computed: {
+      ...mapGetters([
+        'done',
+        'info'
+      ]),
       progressWidth(){
         return {
-          width: (this.done / this.controlslength * 100) + '%'
+          width: (this.done / this.info.length * 100) + '%'
         }
       }
     }
